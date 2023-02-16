@@ -1,5 +1,6 @@
-import { stripe } from '@/lib/stripe'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+import { stripe } from '@/lib/stripe'
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,7 +17,7 @@ export default async function handler(
   }
 
   const checkoutSession = await stripe.checkout.sessions.create({
-    success_url: `${process.env.NEXT_URL}/success`,
+    success_url: `${process.env.NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.NEXT_URL}/`,
     mode: 'payment',
     line_items: [
